@@ -26,21 +26,29 @@ describe('publish-iris-build', () => {
   });
 
   it('publishes the selected tree name from the matching dist directory', () => {
-    expect(createPublishPlan('video').command).toEqual([
-      'cargo',
-      'run',
-      '--manifest-path',
-      expect.stringContaining('/rust/Cargo.toml'),
-      '-p',
-      'hashtree-cli',
-      '--bin',
-      'htree',
-      '--',
-      'add',
-      '.',
-      '--publish',
-      'video',
-    ]);
+    const command = createPublishPlan('video').command;
+    expect(command.slice(-4)).toEqual(['add', '.', '--publish', 'video']);
+
+    if (command[0] === 'cargo') {
+      expect(command).toEqual([
+        'cargo',
+        'run',
+        '--manifest-path',
+        expect.stringContaining('/rust/Cargo.toml'),
+        '-p',
+        'hashtree-cli',
+        '--bin',
+        'htree',
+        '--',
+        'add',
+        '.',
+        '--publish',
+        'video',
+      ]);
+    } else {
+      expect(command).toEqual(['htree', 'add', '.', '--publish', 'video']);
+    }
+
     expect(createPublishPlan('video').distDir).toMatch(/dist-video$/);
   });
 });

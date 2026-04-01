@@ -11,7 +11,7 @@
   },
   "type": "module",
   "scripts": {
-    "build:deps": "pnpm --dir ../.. --filter @hashtree/core build && pnpm --dir ../.. --filter @hashtree/nostr build",
+    "build:deps": "pnpm --dir ../.. --filter @hashtree/core build && pnpm --dir ../.. --filter @hashtree/index build && pnpm --dir ../.. --filter @hashtree/nostr build",
     "dev": "pnpm run build:deps && vite",
     "build": "pnpm run build:deps && vite build",
     "preview": "vite preview",
