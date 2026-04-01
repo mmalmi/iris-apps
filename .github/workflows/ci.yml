@@ -22,6 +22,12 @@ jobs:
           repository: mmalmi/hashtree-cc
           path: hashtree-cc
 
+      - name: Checkout hashtree
+        uses: actions/checkout@v4
+        with:
+          repository: mmalmi/hashtree
+          path: hashtree
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -49,6 +55,7 @@ jobs:
       - name: Verify git install copy flow
         run: pnpm --filter iris-files run test:git:install:copy
         env:
+          HASHTREE_REPO_ROOT: ${{ github.workspace }}/hashtree
           HASHTREE_CC_REPO_ROOT: ${{ github.workspace }}/hashtree-cc
 
   iris-files-e2e:
