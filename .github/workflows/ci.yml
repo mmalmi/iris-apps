@@ -107,7 +107,7 @@ jobs:
           cargo test --manifest-path hashtree/rust/Cargo.toml -p hashtree-cli --features p2p --test crosslang_peer --no-run
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install chromium --with-deps
+        run: pnpm --dir apps/iris-files exec playwright install chromium --with-deps
 
       - name: Run E2E tests
         run: ${{ matrix.suite.command }}
