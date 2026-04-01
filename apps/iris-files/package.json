@@ -1,6 +1,6 @@
 {
   "name": "iris-files",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "private": true,
   "description": "Iris Files - content-addressed file storage on Nostr",
