@@ -2,6 +2,8 @@
 
 Spotify-like responsive audio demo app for Hashtree.
 
+This app now lives inside the `iris-apps` workspace at `apps/iris-audio`.
+
 ## What is here
 
 - Standalone Svelte + Vite app in its own repo
@@ -13,14 +15,14 @@ Spotify-like responsive audio demo app for Hashtree.
 
 ```bash
 pnpm install
-pnpm dev
+pnpm --filter iris-audio dev
 ```
 
 ## Verification
 
 ```bash
-pnpm build
-pnpm test
+pnpm --filter iris-audio build
+pnpm --filter iris-audio test
 ```
 
 ## Fixture Publishing
@@ -28,7 +30,7 @@ pnpm test
 Generate the demo catalog outside the repo and publish from `/tmp`:
 
 ```bash
-npx pnpm@10.23.0 fixture:generate
+pnpm --filter iris-audio fixture:generate
 htree add /tmp/iris-audio-fixture --publish iris-audio-demo
 ```
 

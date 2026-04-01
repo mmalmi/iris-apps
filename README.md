@@ -7,6 +7,7 @@ It contains the extracted portable Iris apps that used to live under
 
 ## Workspace
 
+- `apps/iris-audio`: standalone audio catalog/player app for published hashtree manifests
 - `apps/iris-files`: the main Svelte/Vite workspace for files, git, video, docs, maps, and boards
 - `apps/iris-sites`: the isolated browser runtime for portable `htree://` sites
 - `packages/hashtree`: local `@hashtree/core`
@@ -22,6 +23,7 @@ It contains the extracted portable Iris apps that used to live under
 pnpm install
 pnpm build
 pnpm test
+pnpm run test:audio
 pnpm run test:sites:portable
 ```
 

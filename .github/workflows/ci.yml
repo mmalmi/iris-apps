@@ -7,6 +7,39 @@ on:
     branches: [master]
 
 jobs:
+  iris-audio:
+    name: iris-audio
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --dir apps/iris-audio exec playwright install chromium --with-deps
+
+      - name: Run portable build verification
+        run: pnpm run test:audio:portable
+
+      - name: Run end-to-end tests
+        run: pnpm run test:audio
+
   iris-files:
     name: iris-files
     runs-on: ubuntu-latest

@@ -2,12 +2,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { resolveHtreeCommand } from './hashtreePaths.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const appDir = path.resolve(__dirname, '..');
-const repoRoot = path.resolve(appDir, '..', 'hashtree');
-const manifestPath = path.join(repoRoot, 'rust', 'Cargo.toml');
 const defaultWorkerCompatibilityDate = '2026-04-01';
 const wranglerVersion = '4.78.0';
 
@@ -19,7 +18,7 @@ export const releaseProfile = {
   defaultDomains: ['audio.iris.to'],
   buildCommand: ['pnpm', 'run', 'build'],
   testCommands: [
-    ['pnpm', 'run', 'test:portable-build'],
+    ['node', '--test', 'tests/portable-build.test.mjs'],
     ['pnpm', 'run', 'test:e2e'],
   ],
 };
@@ -103,21 +102,7 @@ export function createReleasePlan(options) {
     {
       id: 'publish',
       label: `Publish ${releaseProfile.appName} to hashtree`,
-      command: [
-        'cargo',
-        'run',
-        '--manifest-path',
-        manifestPath,
-        '-p',
-        'hashtree-cli',
-        '--bin',
-        'htree',
-        '--',
-        'add',
-        '.',
-        '--publish',
-        options.treeName,
-      ],
+      command: resolveHtreeCommand('add', '.', '--publish', options.treeName),
       cwd: distDir,
     },
   ];
