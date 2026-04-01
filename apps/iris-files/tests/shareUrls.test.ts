@@ -73,10 +73,10 @@ describe('shareUrls', () => {
 
   it('builds canonical iris-git repository URLs for web contexts by default', () => {
     expect(getCanonicalGitRepositoryUrl()).toBe(
-      'https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree',
+      'https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps',
     );
-    expect(getCanonicalGitRepositoryUrl('hashtree/apps/iris-files')).toBe(
-      'https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree/apps/iris-files',
+    expect(getCanonicalGitRepositoryUrl('iris-apps/apps/iris-files')).toBe(
+      'https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps/apps/iris-files',
     );
   });
 
@@ -91,7 +91,7 @@ describe('shareUrls', () => {
     });
 
     expect(getCanonicalGitRepositoryUrl()).toBe(
-      'htree://npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/git/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree',
+      'htree://npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/git/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps',
     );
 
     vi.stubGlobal('window', {
@@ -102,8 +102,8 @@ describe('shareUrls', () => {
       },
     });
 
-    expect(getCanonicalGitRepositoryUrl('hashtree/apps/iris-files')).toBe(
-      'htree://npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/git/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree/apps/iris-files',
+    expect(getCanonicalGitRepositoryUrl('iris-apps/apps/iris-files')).toBe(
+      'htree://npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/git/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps/apps/iris-files',
     );
   });
 });

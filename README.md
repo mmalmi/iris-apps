@@ -2,12 +2,13 @@
 
 Standalone workspace for Iris web apps.
 
-Right now it contains `apps/iris-files`, extracted from the main `hashtree`
-repo without deleting the original copy there yet.
+It contains the extracted portable Iris apps that used to live under
+`hashtree/apps/`.
 
 ## Workspace
 
-- `apps/iris-files`: the Svelte/Vite app
+- `apps/iris-files`: the main Svelte/Vite workspace for files, git, video, docs, maps, and boards
+- `apps/iris-sites`: the isolated browser runtime for portable `htree://` sites
 - `packages/hashtree`: local `@hashtree/core`
 - `packages/hashtree-index`: local `@hashtree/index`
 - `packages/hashtree-tree-root`: local `@hashtree/tree-root`
@@ -21,6 +22,7 @@ repo without deleting the original copy there yet.
 pnpm install
 pnpm build
 pnpm test
+pnpm run test:sites:portable
 ```
 
 ## Install git-remote-htree

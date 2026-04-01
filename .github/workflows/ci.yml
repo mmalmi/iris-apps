@@ -1,0 +1,155 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  iris-files:
+    name: iris-files
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Run unit tests
+        run: pnpm test:unit
+
+      - name: Build web apps
+        run: pnpm run build:files
+
+      - name: Verify git install copy flow
+        run: pnpm --filter iris-files run test:git:install:copy
+
+  iris-files-e2e:
+    name: iris-files e2e (${{ matrix.suite.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ matrix.suite.timeout }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+          - name: fast
+            command: pnpm --filter iris-files test:e2e:fast
+            timeout: 55
+            workers: 100%
+            max_workers: 8
+          - name: integration
+            command: pnpm --filter iris-files test:e2e:integration
+            timeout: 75
+            workers: 50%
+            max_workers: 6
+          - name: slow
+            command: pnpm --filter iris-files test:e2e:slow
+            timeout: 45
+            workers: 25%
+            max_workers: 4
+    steps:
+      - name: Checkout iris-apps
+        uses: actions/checkout@v4
+
+      - name: Checkout hashtree
+        uses: actions/checkout@v4
+        with:
+          repository: mmalmi/hashtree
+          path: hashtree
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prebuild Rust artifacts for E2E
+        env:
+          HASHTREE_RUST_DIR: ${{ github.workspace }}/hashtree/rust
+          HTREE_E2E_RUST_TARGET_DIR: ${{ github.workspace }}/hashtree/rust/target
+        run: |
+          cargo build --manifest-path hashtree/rust/Cargo.toml -p hashtree-cli --bin htree --features p2p
+          cargo build --manifest-path hashtree/rust/Cargo.toml --release -p hashtree-cli --bin htree
+          cargo build --manifest-path hashtree/rust/Cargo.toml --release -p git-remote-htree
+          cargo test --manifest-path hashtree/rust/Cargo.toml -p hashtree-cli --features p2p --test crosslang_peer --no-run
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Run E2E tests
+        run: ${{ matrix.suite.command }}
+        env:
+          CI: true
+          HASHTREE_REPO_ROOT: ${{ github.workspace }}/hashtree
+          HASHTREE_RUST_DIR: ${{ github.workspace }}/hashtree/rust
+          HTREE_E2E_RUST_TARGET_DIR: ${{ github.workspace }}/hashtree/rust/target
+          PW_WORKERS: ${{ matrix.suite.workers }}
+          PW_MAX_WORKERS: ${{ matrix.suite.max_workers }}
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.suite.name }}
+          path: apps/iris-files/playwright-report/
+          retention-days: 7
+
+  iris-sites:
+    name: iris-sites
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run portable tests
+        run: pnpm run test:sites:portable

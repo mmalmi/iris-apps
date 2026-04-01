@@ -44,7 +44,7 @@ export const boardsPortableBuild = {
 } as const;
 
 export function getFilesBase(env: Record<string, string | undefined> = process.env): string {
-  return env.GITHUB_PAGES === 'true' ? '/hashtree/' : portableAssetBase;
+  return env.GITHUB_PAGES === 'true' ? '/iris-apps/' : portableAssetBase;
 }
 
 export function sanitizePortableHtml(html: string): string {

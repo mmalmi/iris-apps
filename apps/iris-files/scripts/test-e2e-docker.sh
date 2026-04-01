@@ -95,16 +95,16 @@ docker_run_args+=(
   -e "IRIS_FILES_DOCKER_COMMAND=${RUN_COMMAND}"
   -v "${REPO_ROOT}:/workspace"
   -v iris-apps-node-modules:/workspace/node_modules
-  -v hashtree-iris-files-node-modules:/workspace/apps/iris-files/node_modules
+  -v iris-apps-iris-files-node-modules:/workspace/apps/iris-files/node_modules
   -v iris-apps-hashtree-node-modules:/workspace/packages/hashtree/node_modules
   -v iris-apps-hashtree-index-node-modules:/workspace/packages/hashtree-index/node_modules
   -v iris-apps-hashtree-tree-root-node-modules:/workspace/packages/hashtree-tree-root/node_modules
   -v iris-apps-hashtree-nostr-node-modules:/workspace/packages/hashtree-nostr/node_modules
   -v iris-apps-ndk-node-modules:/workspace/packages/ndk/node_modules
   -v iris-apps-ndk-cache-node-modules:/workspace/packages/ndk-cache/node_modules
-  -v hashtree-iris-files-pnpm-store:/pnpm/store
-  -v hashtree-iris-files-cargo-registry:/root/.cargo/registry
-  -v hashtree-iris-files-cargo-git:/root/.cargo/git
+  -v iris-apps-pnpm-store:/pnpm/store
+  -v iris-apps-cargo-registry:/root/.cargo/registry
+  -v iris-apps-cargo-git:/root/.cargo/git
   -w /workspace/apps/iris-files
   "${IMAGE_NAME}"
   bash -lc '

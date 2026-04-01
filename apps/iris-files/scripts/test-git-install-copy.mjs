@@ -1,10 +1,32 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
 
 import {
   GIT_REMOTE_HTREE_INSTALL_COMMAND,
   GIT_REMOTE_HTREE_INSTALL_DOCS_URL,
 } from '../src/components/Git/codeDropdownCopy.js';
-import { resolveReferenceFile } from './hashtreePaths.mjs';
+import { repoRoot, resolveReferenceFile } from './hashtreePaths.mjs';
+
+function resolveHashtreeCcReference(...segments) {
+  const candidates = [
+    process.env.HASHTREE_CC_REPO_ROOT,
+    path.resolve(repoRoot, '..', 'hashtree-cc'),
+    path.join(repoRoot, 'hashtree-cc'),
+    resolveReferenceFile(...segments),
+  ].filter(Boolean);
+
+  for (const candidateRoot of candidates) {
+    const candidatePath =
+      candidateRoot === resolveReferenceFile(...segments)
+        ? candidateRoot
+        : path.join(candidateRoot, ...segments);
+    if (existsSync(candidatePath)) {
+      return candidatePath;
+    }
+  }
+
+  return path.resolve(repoRoot, '..', 'hashtree-cc', ...segments);
+}
 
 const checks = [
   {
@@ -23,7 +45,7 @@ const checks = [
   },
   {
     label: 'hashtree.cc developers install section',
-    path: resolveReferenceFile('apps', 'hashtree-cc', 'src', 'components', 'Developers.svelte'),
+    path: resolveHashtreeCcReference('apps', 'hashtree-cc', 'src', 'components', 'Developers.svelte'),
     mustInclude: [
       GIT_REMOTE_HTREE_INSTALL_COMMAND,
     ],

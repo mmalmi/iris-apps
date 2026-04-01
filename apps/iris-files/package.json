@@ -1,13 +1,13 @@
 {
   "name": "iris-files",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "private": true,
   "description": "Iris Files - content-addressed file storage on Nostr",
-  "repository": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree",
-  "homepage": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree/apps/iris-files",
+  "repository": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps",
+  "homepage": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps/apps/iris-files",
   "bugs": {
-    "url": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/hashtree?tab=issues"
+    "url": "https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps?tab=issues"
   },
   "type": "module",
   "packageManager": "pnpm@10.23.0",

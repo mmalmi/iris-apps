@@ -47,7 +47,7 @@ function shouldUseHtreeRepositoryUrl(): boolean {
   return canUseSameOriginHtreeProtocolStreaming() || !!getInjectedHtreeServerUrl();
 }
 
-export function getCanonicalGitRepositoryUrl(repoPath = 'hashtree'): string {
+export function getCanonicalGitRepositoryUrl(repoPath = 'iris-apps'): string {
   const normalizedPath = repoPath
     .split('/')
     .map((segment) => segment.trim())
