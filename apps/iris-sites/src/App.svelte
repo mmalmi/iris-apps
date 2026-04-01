@@ -10,6 +10,7 @@
   } from './lib/launcherContent';
   import { parseLaunchInput } from './lib/launchInput';
   import { classifyRuntimeUpdate } from './lib/runtimeUpdatePolicy';
+  import { buildSiteFrameSrc } from './lib/siteFrame';
   import { resolveHostedSite } from './lib/siteConfig';
   import { buildIsolatedSiteHref, buildLauncherHref, buildPermalinkHref, buildSourceHref, isPortalShellHost } from './lib/siteHost';
   import { getMediaClientKey, setupMediaStreaming } from './lib/mediaStreamingSetup';
@@ -56,14 +57,6 @@
       host: window.location.host,
       hash: window.location.hash,
     });
-  }
-
-  function encodePath(path: string): string {
-    return path
-      .split('/')
-      .filter(Boolean)
-      .map((segment) => encodeURIComponent(segment))
-      .join('/');
   }
 
   function bytesToHex(bytes: Uint8Array | undefined): string {
@@ -218,14 +211,7 @@
   }
 
   const iframeSrc = $derived.by(() => {
-    if (!currentSite || !runtimeReady) return '';
-    const encodedPath = encodePath(currentSite.entryPath || 'index.html');
-    const clientKey = getMediaClientKey();
-    if (currentSite.kind === 'immutable') {
-      return `/htree/${currentSite.nhash}/${encodedPath}?htree_c=${encodeURIComponent(clientKey)}`;
-    }
-    const encodedTreeName = encodeURIComponent(currentSite.treeName);
-    return `/htree/${currentSite.npub}/${encodedTreeName}/${encodedPath}?htree_c=${encodeURIComponent(clientKey)}`;
+    return buildSiteFrameSrc(currentSite, runtimeReady, getMediaClientKey(), currentTreeRoot);
   });
 
   const inPortalShell = $derived.by(() => {
