@@ -1,0 +1,35 @@
+{
+  "name": "iris-apps",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev": "pnpm --filter iris-files dev",
+    "dev:docs": "pnpm --filter iris-files dev:docs",
+    "dev:git": "pnpm --filter iris-files dev:git",
+    "dev:video": "pnpm --filter iris-files dev:video",
+    "dev:maps": "pnpm --filter iris-files dev:maps",
+    "dev:boards": "pnpm --filter iris-files dev:boards",
+    "build": "pnpm --filter iris-files build",
+    "build:docs": "pnpm --filter iris-files build:docs",
+    "build:git": "pnpm --filter iris-files build:git",
+    "build:video": "pnpm --filter iris-files build:video",
+    "build:maps": "pnpm --filter iris-files build:maps",
+    "build:boards": "pnpm --filter iris-files build:boards",
+    "test": "pnpm --filter iris-files test:unit",
+    "test:unit": "pnpm --filter iris-files test:unit",
+    "test:e2e": "pnpm --filter iris-files test:e2e",
+    "lint": "pnpm --filter iris-files lint"
+  },
+  "pnpm": {
+    "overrides": {
+      "@hashtree/core": "workspace:*",
+      "@hashtree/index": "workspace:*",
+      "@hashtree/nostr": "workspace:*",
+      "@hashtree/tree-root": "workspace:*"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
