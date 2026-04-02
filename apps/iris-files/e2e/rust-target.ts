@@ -3,7 +3,7 @@ import path from 'path';
 import { repoRoot, resolveHashtreeCiDir, resolveHashtreeRustDir } from '../scripts/hashtreePaths.mjs';
 
 export const HASHTREE_RUST_DIR = resolveHashtreeRustDir() ?? path.join(repoRoot, 'rust');
-export const HASHTREE_CI_DIR = resolveHashtreeCiDir() ?? path.resolve(repoRoot, '..', 'hashtree-ci');
+export const HASHTREE_CI_DIR = resolveHashtreeCiDir() ?? path.join(repoRoot, 'hashtree-ci');
 
 const repoRustTargetDir = path.join(HASHTREE_RUST_DIR, 'target');
 

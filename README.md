@@ -35,10 +35,8 @@ pnpm run test:sites:portable
 curl -fsSL https://upload.iris.to/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/releases%2Fhashtree/latest/install.sh | sh
 ```
 
-Cross-language E2E and release helpers look for sibling repos automatically:
-
-- `../hashtree/rust`
-- `../hashtree-ci`
-
-You can override those with `HASHTREE_RUST_DIR`, `HASHTREE_REPO_ROOT`, and
-`HASHTREE_CI_DIR`.
+Cross-language E2E and release helpers use an installed `htree` by default.
+To run against a local Hashtree Rust checkout instead, set `HTREE_BIN`,
+`HASHTREE_RUST_DIR`, or `HASHTREE_REPO_ROOT`. The CI status e2e test also
+accepts `HASHTREE_CI_DIR` when you want to point it at a local `hashtree-ci`
+checkout.

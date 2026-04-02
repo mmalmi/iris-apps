@@ -159,10 +159,11 @@ Outputs platform-specific installers in `src-tauri/target/release/bundle/`:
 To include the `htree` CLI tool in the desktop app:
 
 1. Build htree for target platforms. The helper scripts in this repo look for
-   `HASHTREE_RUST_DIR`, then `../hashtree/rust`.
+   `HASHTREE_RUST_DIR`; they do not assume a sibling checkout.
 
    ```bash
-   cargo build --release --manifest-path "${HASHTREE_RUST_DIR:-../hashtree/rust}/Cargo.toml" -p hashtree-cli
+   export HASHTREE_RUST_DIR=/path/to/hashtree/rust
+   cargo build --release --manifest-path "${HASHTREE_RUST_DIR}/Cargo.toml" -p hashtree-cli
    ```
 
 2. Create `src-tauri/bin/` and add platform-specific binaries:

@@ -50,14 +50,8 @@ fi
 RUN_COMMAND="PW_MAX_WORKERS=${DEFAULT_WORKERS} ${RUN_COMMAND}"
 
 HASHTREE_REPO_ROOT_HOST="${HASHTREE_REPO_ROOT:-}"
-if [[ -z "${HASHTREE_REPO_ROOT_HOST}" && -f "${REPO_ROOT}/../hashtree/rust/Cargo.toml" ]]; then
-  HASHTREE_REPO_ROOT_HOST="$(cd "${REPO_ROOT}/../hashtree" && pwd)"
-fi
 
 HASHTREE_CI_DIR_HOST="${HASHTREE_CI_DIR:-}"
-if [[ -z "${HASHTREE_CI_DIR_HOST}" && -f "${REPO_ROOT}/../hashtree-ci/Cargo.toml" ]]; then
-  HASHTREE_CI_DIR_HOST="$(cd "${REPO_ROOT}/../hashtree-ci" && pwd)"
-fi
 
 docker build \
   --platform "${PLATFORM}" \

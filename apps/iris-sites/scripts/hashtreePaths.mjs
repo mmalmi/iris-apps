@@ -26,7 +26,6 @@ export function resolveHashtreeRepoRoot() {
     [
       process.env.HASHTREE_REPO_ROOT,
       path.join(repoRoot, 'hashtree'),
-      path.resolve(repoRoot, '..', 'hashtree'),
     ],
     (candidate) => existsSync(path.join(candidate, 'rust', 'Cargo.toml')),
   );

@@ -50,10 +50,6 @@ resolve_rust_dir() {
     printf '%s\n' "${ROOT_DIR}/rust"
     return 0
   fi
-  if [[ -f "${ROOT_DIR}/../hashtree/rust/Cargo.toml" ]]; then
-    printf '%s\n' "${ROOT_DIR}/../hashtree/rust"
-    return 0
-  fi
   return 1
 }
 
@@ -67,7 +63,7 @@ fi
 
 RUST_DIR="$(resolve_rust_dir || true)"
 if [[ -z "${RUST_DIR}" ]]; then
-  echo "Unable to locate hashtree rust workspace. Set HASHTREE_RUST_DIR or HTREE_BIN." >&2
+  echo "Unable to locate hashtree rust workspace. Install htree, set HTREE_BIN, or set HASHTREE_RUST_DIR." >&2
   exit 1
 fi
 

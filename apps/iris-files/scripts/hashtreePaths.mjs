@@ -26,7 +26,6 @@ export function resolveHashtreeRepoRoot() {
     [
       process.env.HASHTREE_REPO_ROOT,
       path.join(repoRoot, 'hashtree'),
-      path.resolve(repoRoot, '..', 'hashtree'),
     ],
     (candidate) => existsSync(path.join(candidate, 'rust', 'Cargo.toml')),
   );
@@ -49,7 +48,6 @@ export function resolveHashtreeCiDir() {
     [
       process.env.HASHTREE_CI_DIR,
       path.join(repoRoot, 'hashtree-ci'),
-      path.resolve(repoRoot, '..', 'hashtree-ci'),
     ],
     (candidate) =>
       existsSync(path.join(candidate, 'Cargo.toml')) ||
