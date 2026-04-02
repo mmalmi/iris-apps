@@ -2,6 +2,8 @@
 
 Standalone workspace for Iris web apps.
 
+Source: <https://git.iris.to/#/npub1xdhnr9mrv47kkrn95k6cwecearydeh8e895990n3acntwvmgk2dsdeeycm/iris-apps>
+
 It contains the extracted portable Iris apps that used to live under
 `hashtree/apps/`.
 
